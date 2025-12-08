@@ -1,4 +1,4 @@
-세션 1강
+롤 챔피언 기반 객체지향 구현해보기
 -
 - 클래스 생성과 객체 생성, OOP 관련
 - 각 챔피언 공통 추상 클래스 champion/specification/Champion
