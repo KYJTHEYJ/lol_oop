@@ -34,6 +34,7 @@ public class Main {
         BattleChapions.add(championList.get(randomIndex1));
         BattleChapions.add(championList.get(randomIndex2));
 
+        // 전투는 확률 별 행위를 진행하고 HP 0 이하가 한 쪽의 승리로 결정
         System.out.println("==== 소환사의 협곡에 오신 것을 환영합니다. ====");
         System.out.println("=== 전투 시작 ===");
 
@@ -54,8 +55,8 @@ public class Main {
 
         System.out.println("=== 전투 종료 ===");
         System.out.println("=== 전투 결과 ===");
+        BattleChapions.forEach(champion -> System.out.println(champion));
         for(Champion champion : BattleChapions) {
-            System.out.println(champion);
 
             if(!champion.checkHp()) {
                 System.out.println(champion.getName() + " 승리!");
