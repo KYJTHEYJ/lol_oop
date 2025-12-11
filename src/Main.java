@@ -3,18 +3,37 @@ import champion.Sion;
 import champion.Veigar;
 import champion.specification.Champion;
 import champion.Garen;
+import champion.util.BattleUtil;
+import champion.util.GameConstants;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Champion garen = new Garen("Garen", 1, 655, 65, 10);
-        Champion ashe = new Ashe("Ashe", 1, 575, 58, 8);
-        Champion sion = new Sion("Sion", 1, 750, 58, 15);
-        Champion veigar = new Veigar("Veigar", 1, 550, 55, 9);
+        Champion garen = new Garen(
+                GameConstants.garenNameEN,
+                GameConstants.garenInitHp,
+                GameConstants.garenInitAttack,
+                GameConstants.garenInitDefense
+        );
+        Champion ashe = new Ashe(
+                GameConstants.asheNameEN,
+                GameConstants.asheInitHp,
+                GameConstants.asheInitAttack,
+                GameConstants.asheInitDefense
+        );
+        Champion sion = new Sion(
+                GameConstants.sionNameEN,
+                GameConstants.sionInitHp,
+                GameConstants.sionInitAttack,
+                GameConstants.sionInitDefense
+        );
+        Champion veigar = new Veigar(
+                GameConstants.veigarNameEN,
+                GameConstants.veigarInitHp,
+                GameConstants.veigarInitAttack,
+                GameConstants.veigarInitDefense
+        );
 
         // 챔피언 목록
         List<Champion> championList = Arrays.asList(garen, ashe, sion, veigar);
@@ -44,12 +63,15 @@ public class Main {
             if(act <= 0.2) {
                 if(championList.get(randomIndex1).useQ(championList.get(randomIndex2))) break;
                 if(championList.get(randomIndex2).useQ(championList.get(randomIndex1))) break;
+                System.out.println("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
             } else if(act <= 0.3) {
                 championList.get(randomIndex1).specialSkill();
                 championList.get(randomIndex2).specialSkill();
+                System.out.println("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
             } else if(act <= 0.5) {
                 if(championList.get(randomIndex1).basicAttackChampion(championList.get(randomIndex2))) break;
                 if(championList.get(randomIndex2).basicAttackChampion(championList.get(randomIndex1))) break;
+                System.out.println("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
             }
         } while(!championList.get(randomIndex1).checkHp() && !championList.get(randomIndex2).checkHp());
 
@@ -57,11 +79,9 @@ public class Main {
         System.out.println("=== 전투 결과 ===");
         BattleChapions.forEach(champion -> System.out.println(champion));
         for(Champion champion : BattleChapions) {
-
             if(!champion.checkHp()) {
                 System.out.println(champion.getName() + " 승리!");
             }
         }
-
     }
 }

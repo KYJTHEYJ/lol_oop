@@ -1,24 +1,19 @@
 package champion.specification;
 
+import static champion.util.GameConstants.criticalDamageMultiple;
+import static champion.util.GameConstants.initCriticalPercent;
+
 public abstract class Champion {
     // 접근 제어자를 통한 외부 직접 속성 접근 차단
     private String name;
-    private int level;
     private int maxHp;
     private int hp;
     private int attackPoint;
     private int defensePoint;
 
+    //region Getter and Setter
     public String getName() {
         return name;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public int getMaxHp() {
@@ -53,13 +48,23 @@ public abstract class Champion {
         this.defensePoint = defensePoint;
     }
 
+    @Override
+    public String toString() {
+        return "Champion{" +
+               "name='" + name + '\'' +
+               ", maxHp=" + maxHp +
+               ", hp=" + hp +
+               ", attackPoint=" + attackPoint +
+               ", defensePoint=" + defensePoint +
+               '}';
+    }
+    //endregion
+
     public Champion(String name
-            , int level
             , int hp
             , int attackPoint
             , int defensePoint) {
         this.name = name;
-        this.level = level;
         this.maxHp = hp;
         this.hp = hp;
         this.attackPoint = attackPoint;
@@ -74,9 +79,9 @@ public abstract class Champion {
     // 기본 공격
     public boolean basicAttackChampion(Champion target) {
         System.out.println(getName() + " -> " + target.getName() + "을 공격!");
-        if (Math.random() <= 0.05) {
+        if (Math.random() <= initCriticalPercent) {
             System.out.println("치명타 공격! 2배 대미지!");
-            return target.takeDamage(attackPoint * 2);
+            return target.takeDamage(attackPoint * criticalDamageMultiple);
         } else {
             return target.takeDamage(attackPoint);
         }
@@ -102,16 +107,4 @@ public abstract class Champion {
 
     // 챔피언 특성 별 고유 스킬
     public abstract void specialSkill();
-
-    @Override
-    public String toString() {
-        return "Champion{" +
-               "name='" + name + '\'' +
-               ", level=" + level +
-               ", maxHp=" + maxHp +
-               ", hp=" + hp +
-               ", attackPoint=" + attackPoint +
-               ", defensePoint=" + defensePoint +
-               '}';
-    }
 }
