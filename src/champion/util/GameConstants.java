@@ -4,7 +4,11 @@ public final class GameConstants {
 
     // region 숫자 관련 상수들
     // region 공통 관련
+    public static int battleCount = 0;
     public static final int criticalDamageMultiple = 2;
+    public static final double QSkillActPercent = 0.2;
+    public static final double basicAttackActPercent = 0.5;
+    public static final double specialSkillActPercent = 0.3;
     // endregion
 
     // region 공통 확률 관련

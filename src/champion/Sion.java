@@ -15,9 +15,9 @@ public class Sion extends Champion implements Tank, Warrior {
     @Override
     public boolean useQ(Champion target) {
         System.out.printf(getName() + " 이(가) 대량 학살 강타를 사용합니다! 각각 %d%%, %d%%, %d%% 확률 별로 %d, %d, %d의 공격을 가합니다!\n"
-                , (sionQSkillPercent1 * 100)
-                , (sionQSkillPercent2 * 100)
-                , (sionQSkillPercent3 * 100)
+                , (int) (sionQSkillPercent1 * 100)
+                , (int) (sionQSkillPercent2 * 100)
+                , (int) (sionQSkillPercent3 * 100)
                 , (int) Math.round(getAttackPoint() * sionQSkillDamageMultiple1)
                 , (int) Math.round(getAttackPoint() * sionQSkillDamageMultiple2)
                 , (int) Math.round(getAttackPoint() * sionQSkillDamageMultiple3));

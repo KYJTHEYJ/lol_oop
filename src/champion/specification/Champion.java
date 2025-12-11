@@ -1,5 +1,7 @@
 package champion.specification;
 
+import champion.util.GameConstants;
+
 import static champion.util.GameConstants.criticalDamageMultiple;
 import static champion.util.GameConstants.initCriticalPercent;
 
@@ -76,8 +78,9 @@ public abstract class Champion {
         return getHp() <= 0;
     }
 
-    // 기본 공격
+    // 기본 공격 + battleCount 증가 추가
     public boolean basicAttackChampion(Champion target) {
+        GameConstants.battleCount++;
         System.out.println(getName() + " -> " + target.getName() + "을 공격!");
         if (Math.random() <= initCriticalPercent) {
             System.out.println("치명타 공격! 2배 대미지!");
@@ -102,9 +105,23 @@ public abstract class Champion {
         return hp <= 0;
     }
 
+    // 템플릿 메서드 패턴으로 확장
     // Q 스킬
     public abstract boolean useQ(Champion target);
 
+    // Q 스킬 + BattleCount 증가
+    public final boolean useQWithBattleCount(Champion target) {
+        GameConstants.battleCount++;
+        return useQ(target);
+    }
+
+    // 템플릿 메서드 패턴으로 확장
     // 챔피언 특성 별 고유 스킬
     public abstract void specialSkill();
+
+    // 챔피언 특성 별 고유 스킬 + BattleCount 증가
+    public final void specialSkillWithBattleCount() {
+        GameConstants.battleCount++;
+        specialSkill();
+    }
 }
