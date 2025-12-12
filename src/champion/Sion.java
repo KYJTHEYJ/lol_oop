@@ -3,6 +3,7 @@ package champion;
 import champion.specification.champion.Champion;
 import champion.specification.champion.Tank;
 import champion.specification.champion.Warrior;
+import champion.specification.resurrection.Resurrection;
 import champion.specification.resurrection.SionGloriousDeath;
 import champion.util.BattleUtil;
 
@@ -12,7 +13,6 @@ public class Sion extends Champion implements Tank, Warrior {
 
     public Sion(String name, int hp, int attackPoint, int defensePoint) {
         super(name, hp, attackPoint, defensePoint);
-        setResurrection(new SionGloriousDeath(this));
     }
 
     @Override
@@ -61,6 +61,11 @@ public class Sion extends Champion implements Tank, Warrior {
     }
 
     @Override
+    public Resurrection createResurrection() {
+        return new SionGloriousDeath(this);
+    }
+
+    @Override
     protected void actAddBuffResurrect() {
         if(Math.random() <= resurrectionSkillPercentLess) {
             setAttackPoint(getAttackPoint() + resurrectionBuffAddAtt);
@@ -68,7 +73,7 @@ public class Sion extends Champion implements Tank, Warrior {
         } else if(Math.random() <= resurrectionSkillPercentMajor) {
             setAttackPoint(getAttackPoint() + resurrectionBuffAddDef);
             BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddDef + " 방어력을 얻습니다! (현재 방어력 : " + getDefensePoint() + ")");
-        } else {
+        } else if(Math.random() <= resurrectionSkillPercentLess) {
             int resultHp = getHp() + resurrectionBuffSionHealHp;
             setHp(Math.min(resultHp, getMaxHp()));
             BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 HP를 추가로 " + resurrectionBuffSionHealHp + " 회복합니다! (현재 HP : " + getHp() + ")");

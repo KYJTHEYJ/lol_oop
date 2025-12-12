@@ -15,7 +15,6 @@ public class Veigar extends Champion implements Mage {
 
     public Veigar(String name, int hp, int attackPoint, int defensePoint) {
         super(name, hp, attackPoint, defensePoint);
-        setResurrection(new CommonResurrection(this));
     }
 
     @Override
@@ -63,10 +62,10 @@ public class Veigar extends Champion implements Mage {
             int resultHp = getHp() + resurrectionBuffHealHp;
             setHp(Math.min(resultHp, getMaxHp()));
             BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 HP를 추가로 " + resurrectionBuffHealHp + " 회복합니다! (현재 HP : " + getHp() + ")");
-        } else if(Math.random() <= resurrectionSkillPercentMajor) {
+        } else if(Math.random() <= resurrectionSkillPercentLess) {
             setAttackPoint(getAttackPoint() + resurrectionBuffAddDef);
             BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddDef + " 방어력을 얻습니다! (현재 방어력 : " + getDefensePoint() + ")");
-        } else {
+        } else if(Math.random() <= resurrectionSkillPercentLess) {
             setAttackPoint(getAttackPoint() + resurrectionBuffAddAtt);
             BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddAtt + " 공격력을 얻습니다! (현재 공격력 : " + getAttackPoint() + ")");
         }

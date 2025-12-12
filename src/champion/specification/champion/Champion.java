@@ -1,5 +1,6 @@
 package champion.specification.champion;
 
+import champion.specification.resurrection.CommonResurrection;
 import champion.specification.resurrection.Resurrection;
 import champion.util.BattleUtil;
 import champion.util.GameConstants;
@@ -58,8 +59,8 @@ public abstract class Champion {
     }
 
     // 부활 전략 패턴 사용
-    // 일반 챔피언들은 CommonResurrection 을 set 사용
-    // 특정 챔피언은 특정 Resurrection 을 set 사용
+    // 일반 챔피언들은 CommonResurrection 을 set하여 사용
+    // 특정 챔피언은 특정 Resurrection 을 set하여 사용
     public void setResurrection(Resurrection resurrection) {
         this.resurrection = resurrection;
     }
@@ -138,6 +139,10 @@ public abstract class Champion {
     public final void specialSkillWithBattleCount() {
         GameConstants.battleCount++;
         specialSkill();
+    }
+
+    public Resurrection createResurrection() {
+        return new CommonResurrection(this);
     }
 
     // 부활 했는지 체크하여 1번만 부활
