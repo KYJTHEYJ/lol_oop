@@ -1,6 +1,6 @@
 package champion.util;
 
-import champion.specification.Champion;
+import champion.specification.champion.Champion;
 
 public class BattleUtil {
     // 챔피언 2개를 입력받아 더 체력이 높은 챔피언을 반환하기

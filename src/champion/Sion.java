@@ -1,8 +1,8 @@
 package champion;
 
-import champion.specification.Champion;
-import champion.specification.Tank;
-import champion.specification.Warrior;
+import champion.specification.champion.Champion;
+import champion.specification.champion.Tank;
+import champion.specification.champion.Warrior;
 
 import static champion.util.GameConstants.*;
 

@@ -1,7 +1,7 @@
 package champion;
 
-import champion.specification.Champion;
-import champion.specification.Mage;
+import champion.specification.champion.Champion;
+import champion.specification.champion.Mage;
 
 import static champion.util.GameConstants.*;
 
