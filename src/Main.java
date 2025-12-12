@@ -59,6 +59,10 @@ public class Main {
         BattleUtil.Log.print("==== 소환사의 협곡에 오신 것을 환영합니다. ====");
         BattleUtil.Log.print("=== 전투 시작 ===");
 
+        // static 참조 오류 발생 시켜보기
+        // System.out.println("error 1 : " + wrongBasicAttackActPercent1);
+        // System.out.println("error 2 : " + wrongBasicAttackActPercent2);
+
         do {
             if(Math.random() <= QSkillActPercent) {
                 if(championList.get(randomIndex1).useQWithBattleCount(championList.get(randomIndex2))) break;
@@ -78,7 +82,7 @@ public class Main {
         BattleUtil.Log.print("=== 전투 종료 ===");
         BattleUtil.Log.print("=== 전투 결과 ===");
         BattleChapions.forEach(champion -> BattleUtil.Log.print(champion.toString()));
-        BattleUtil.Log.print("총 전투 횟수 : " + GameConstants.battleCount);
+        //BattleUtil.Log.print("총 전투 횟수 : " + GameConstants.battleCount);
         for(Champion champion : BattleChapions) {
             if(!champion.checkHp()) {
                 BattleUtil.Log.print(champion.getName() + " 승리!");

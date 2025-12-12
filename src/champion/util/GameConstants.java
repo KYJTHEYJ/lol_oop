@@ -5,8 +5,29 @@ public final class GameConstants {
     // region 숫자 관련 상수들
     // region 공통 관련
     public static int battleCount = 0;
+
+    // 만약 battleCount의 static 없이 클래스의 인스턴스 필드로 사용할 경우
+    // 컨텍스트가 달라질 때마다 클래스의 객체를 선언해 battleCount 를 사용해야 하는데
+    // 이럴 경우 각자의 객체를 가지는 것이므로 전체 공유가 불가능
+    //public int battleCount = 0;
+
     public static final int criticalDamageMultiple = 2;
     public static final double QSkillActPercent = 0.2;
+
+    // 서로 참조시 우선 컴파일 에러 발생
+    // Cannot read value of field 'wrongBasicAttackActPercent2' before the field's definition
+    // 초기화 전에 변수를 사용했다는 문제가 발생함
+    // public static double wrongBasicAttackActPercent1 = wrongBasicAttackActPercent2;
+    // public static double wrongBasicAttackActPercent2 = wrongBasicAttackActPercent1;
+
+    // 메서드 테스트를 해보면 컴파일러도 체크 불가, 이대로 테스트를 Main 같은 static 메서드내에서 진행하면
+    // wrongBasicAttacActPercent1 은 0.0 출력됨
+    // public static double wrongBasicAttackActPercent1 = getwrongBasicAttack2();
+    // public static double wrongBasicAttackActPercent2 = 0.2;
+    // public static double getwrongBasicAttack2() {
+    //     return wrongBasicAttackActPercent2;
+    // }
+
     public static final double basicAttackActPercent = 0.5;
     public static final double specialSkillActPercent = 0.3;
     public static final double commonResurrectHpPercent = 0.5;
