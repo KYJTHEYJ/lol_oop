@@ -1,41 +1,17 @@
-import champion.Ashe;
-import champion.Sion;
-import champion.Veigar;
 import champion.specification.champion.Champion;
-import champion.Garen;
 import champion.util.BattleUtil;
-import champion.util.GameConstants;
 
 import java.util.*;
 
+import static champion.util.ChampionEnum.*;
 import static champion.util.GameConstants.*;
 
 public class Main {
     public static void main(String[] args) {
-        Champion garen = new Garen(
-                GameConstants.garenNameEN,
-                GameConstants.garenInitHp,
-                GameConstants.garenInitAttack,
-                GameConstants.garenInitDefense
-        );
-        Champion ashe = new Ashe(
-                GameConstants.asheNameEN,
-                GameConstants.asheInitHp,
-                GameConstants.asheInitAttack,
-                GameConstants.asheInitDefense
-        );
-        Champion sion = new Sion(
-                GameConstants.sionNameEN,
-                GameConstants.sionInitHp,
-                GameConstants.sionInitAttack,
-                GameConstants.sionInitDefense
-        );
-        Champion veigar = new Veigar(
-                GameConstants.veigarNameEN,
-                GameConstants.veigarInitHp,
-                GameConstants.veigarInitAttack,
-                GameConstants.veigarInitDefense
-        );
+        Champion garen = Garen.getChampion();
+        Champion ashe = Ashe.getChampion();
+        Champion sion = Sion.getChampion();
+        Champion veigar = Veigar.getChampion();
 
         // 챔피언 목록
         List<Champion> championList = Arrays.asList(garen, ashe, sion, veigar);
