@@ -1,6 +1,7 @@
 package champion.specification.champion;
 
 import champion.specification.resurrection.Resurrection;
+import champion.util.BattleUtil;
 import champion.util.GameConstants;
 
 import static champion.util.GameConstants.criticalDamageMultiple;
@@ -96,9 +97,9 @@ public abstract class Champion {
     // 기본 공격 + battleCount 증가 추가
     public boolean basicAttackChampion(Champion target) {
         GameConstants.battleCount++;
-        System.out.println(getName() + " -> " + target.getName() + "을 공격!");
+        BattleUtil.Log.print(getName() + " -> " + target.getName() + "을 공격!");
         if (Math.random() <= initCriticalPercent) {
-            System.out.println("치명타 공격! 2배 공격력으로 주는 대미지!");
+            BattleUtil.Log.print("치명타 공격! 2배 공격력으로 주는 대미지!");
             return target.takeDamage(attackPoint * criticalDamageMultiple);
         } else {
             return target.takeDamage(attackPoint);
@@ -114,8 +115,8 @@ public abstract class Champion {
 
         hp -= actualDamage;
 
-        System.out.println(name + " 이(가) " + actualDamage + " 대미지를 입었습니다!");
-        System.out.println(name + " 의 현재 체력 : " + hp);
+        BattleUtil.Log.print(name + " 이(가) " + actualDamage + " 대미지를 입었습니다!");
+        BattleUtil.Log.print(name + " 의 현재 체력 : " + hp);
 
         actResurrect();
 

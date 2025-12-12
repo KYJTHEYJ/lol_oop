@@ -3,7 +3,6 @@ import champion.Sion;
 import champion.Veigar;
 import champion.specification.champion.Champion;
 import champion.Garen;
-import champion.specification.resurrection.CommonResurrection;
 import champion.util.BattleUtil;
 import champion.util.GameConstants;
 
@@ -57,33 +56,40 @@ public class Main {
         BattleChapions.add(championList.get(randomIndex2));
 
         // 전투는 확률 별 행위를 진행하고 HP 0 이하가 한 쪽의 승리로 결정
-        System.out.println("==== 소환사의 협곡에 오신 것을 환영합니다. ====");
-        System.out.println("=== 전투 시작 ===");
+        BattleUtil.Log.print("==== 소환사의 협곡에 오신 것을 환영합니다. ====");
+        BattleUtil.Log.print("=== 전투 시작 ===");
 
         do {
             if(Math.random() <= QSkillActPercent) {
                 if(championList.get(randomIndex1).useQWithBattleCount(championList.get(randomIndex2))) break;
                 if(championList.get(randomIndex2).useQWithBattleCount(championList.get(randomIndex1))) break;
-                System.out.println("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
+                BattleUtil.Log.print("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
             } else if(Math.random() <= specialSkillActPercent) {
                 championList.get(randomIndex1).specialSkillWithBattleCount();
                 championList.get(randomIndex2).specialSkillWithBattleCount();
-                System.out.println("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
+                BattleUtil.Log.print("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
             } else if(Math.random() <= basicAttackActPercent){
                 if(championList.get(randomIndex1).basicAttackChampion(championList.get(randomIndex2))) break;
                 if(championList.get(randomIndex2).basicAttackChampion(championList.get(randomIndex1))) break;
-                System.out.println("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
+                BattleUtil.Log.print("현재 체력 우세 : " + BattleUtil.pickHigherHp(championList.get(randomIndex1), championList.get(randomIndex2)));
             }
         } while(!championList.get(randomIndex1).checkHp() && !championList.get(randomIndex2).checkHp());
 
-        System.out.println("=== 전투 종료 ===");
-        System.out.println("=== 전투 결과 ===");
-        BattleChapions.forEach(champion -> System.out.println(champion));
-        System.out.println("총 전투 횟수 : " + GameConstants.battleCount);
+        BattleUtil.Log.print("=== 전투 종료 ===");
+        BattleUtil.Log.print("=== 전투 결과 ===");
+        BattleChapions.forEach(champion -> BattleUtil.Log.print(champion.toString()));
+        BattleUtil.Log.print("총 전투 횟수 : " + GameConstants.battleCount);
         for(Champion champion : BattleChapions) {
             if(!champion.checkHp()) {
-                System.out.println(champion.getName() + " 승리!");
+                BattleUtil.Log.print(champion.getName() + " 승리!");
             }
+        }
+
+        System.out.print("\n로그를 다시 보시려면 y 를 입력하시고 종료하려면 다른 키워드를 입력해주세요 : ");
+        String logShowYn = new Scanner(System.in).nextLine();
+
+        if(logShowYn.equals("y".toUpperCase()) || logShowYn.equals("y")) {
+            BattleUtil.Log.showAllLog();
         }
     }
 }

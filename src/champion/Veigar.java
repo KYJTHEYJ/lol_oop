@@ -3,6 +3,7 @@ package champion;
 import champion.specification.champion.Champion;
 import champion.specification.champion.Mage;
 import champion.specification.resurrection.CommonResurrection;
+import champion.util.BattleUtil;
 
 import static champion.util.GameConstants.*;
 
@@ -23,7 +24,7 @@ public class Veigar extends Champion implements Mage {
         int skillCount = 1;
 
         if(doubleSkillStack > 0 && Math.random() <= doubleSkillPercent) {
-            System.out.println(getName() + "의 더블 스킬 사용! 남은 더블 스킬 : " + doubleSkillStack);
+            BattleUtil.Log.print(getName() + "의 더블 스킬 사용! 남은 더블 스킬 : " + doubleSkillStack);
             skillCount = 2;
 
             if(doubleSkillStack > 0) {
@@ -32,9 +33,9 @@ public class Veigar extends Champion implements Mage {
         }
 
         for (int index = 0; index < skillCount; index++) {
-            System.out.printf(getName() + " 이(가) 사악한 일격을 사용합니다! %d의 데미지를 가합니다! 사용한 후마다 %d씩 강해집니다!\n"
-                    , veigarQSkillDamge + veigarQSkillAfterAddQDamage * QStack, veigarQSkillAfterAddQDamage);
-            System.out.println(getName() + " -> " + target.getName() + "에게 사악한 일격!");
+            BattleUtil.Log.print(String.format(getName() + " 이(가) 사악한 일격을 사용합니다! %d의 데미지를 가합니다! 사용한 후마다 %d씩 강해집니다!"
+                    , veigarQSkillDamge + veigarQSkillAfterAddQDamage * QStack, veigarQSkillAfterAddQDamage));
+            BattleUtil.Log.print(getName() + " -> " + target.getName() + "에게 사악한 일격!");
 
             target.takeDamage(veigarQSkillDamge + veigarQSkillAfterAddQDamage * QStack);
 
@@ -52,7 +53,7 @@ public class Veigar extends Champion implements Mage {
     @Override
     public void doubleSkill() {
         doubleSkillStack++;
-        System.out.println(getName() + " 의 더블 스킬! 1번당 "+ (int) (doubleSkillPercent * 100)
-                           +"% 확률로 스킬을 두번 사용합니다! 남은 더블 스킬 : " + doubleSkillStack);
+        BattleUtil.Log.print(getName() + " 의 더블 스킬! 1번당 " + (int) (doubleSkillPercent * 100)
+                             + "% 확률로 스킬을 두번 사용합니다! 남은 더블 스킬 : " + doubleSkillStack);
     }
 }
