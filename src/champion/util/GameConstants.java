@@ -12,7 +12,6 @@ public final class GameConstants {
     //public int battleCount = 0;
 
     public static final int criticalDamageMultiple = 2;
-    public static final double QSkillActPercent = 0.2;
 
     // 서로 참조시 우선 컴파일 에러 발생
     // Cannot read value of field 'wrongBasicAttackActPercent2' before the field's definition
@@ -28,15 +27,23 @@ public final class GameConstants {
     //     return wrongBasicAttackActPercent2;
     // }
 
-    public static final double basicAttackActPercent = 0.5;
-    public static final double specialSkillActPercent = 0.3;
-    public static final double commonResurrectHpPercent = 0.5;
+    public static final int resurrectionBuffAddAtt = 100;
+    public static final int resurrectionBuffAddDef = 20;
+    public static final int resurrectionBuffHealHp = 300;
+    public static final int resurrectionBuffSionHealHp = 100;
+
     // endregion
 
     // region 공통 확률 관련
+    public static final double QSkillActPercent = 0.2;
+    public static final double basicAttackActPercent = 0.5;
+    public static final double specialSkillActPercent = 0.3;
+    public static final double commonResurrectHpPercent = 0.5;
     public static final double initCriticalPercent = 0.05;
     public static final double kitePercent = 0.3;
     public static final double doubleSkillPercent = 0.5;
+    public static final double resurrectionSkillPercentLess = 0.3;
+    public static final double resurrectionSkillPercentMajor = 0.4;
     // endregion
 
     //region 챔피언 초기 HP 설정 값

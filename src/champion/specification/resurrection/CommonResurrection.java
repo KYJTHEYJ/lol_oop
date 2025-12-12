@@ -16,7 +16,7 @@ public class CommonResurrection implements Resurrection {
     @Override
     public void resurrect() {
         GameConstants.battleCount++;
-        BattleUtil.Log.print(champion.getName() + " 가 치명적인 피해를 입었습니다!");
+        BattleUtil.Log.print(champion.getName() + " 이(가) 치명적인 피해를 입었습니다!");
         BattleUtil.Log.print(String.format(champion.getName() + " 이(가) HP %d%% (%d)인 상태로 부활하여 다시 전투 합니다!"
                 , (int) (commonResurrectHpPercent * 100), (int) Math.round(champion.getMaxHp() * commonResurrectHpPercent)));
         champion.setHp((int) Math.round(champion.getMaxHp() * commonResurrectHpPercent));

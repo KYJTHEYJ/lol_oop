@@ -1,7 +1,6 @@
 package champion;
 
-import champion.specification.champion.Champion;
-import champion.specification.champion.Ranged;
+import champion.specification.champion.*;
 import champion.specification.resurrection.CommonResurrection;
 import champion.util.BattleUtil;
 
@@ -47,7 +46,22 @@ public class Ashe extends Champion implements Ranged {
     @Override
     public void kite() {
         kiteStack++;
-        BattleUtil.Log.print(getName() + " 의 카이팅! 1번당 공격을 " + (kitePercent * 100)
+        BattleUtil.Log.print(getName() + " 의 카이팅! 1번당 공격을 " + (int) (kitePercent * 100)
                              + "% 확률로 회피합니다! 남은 카이팅 : " + kiteStack);
+    }
+
+    @Override
+    protected void actAddBuffResurrect() {
+        if(Math.random() <= resurrectionSkillPercentMajor) {
+            setAttackPoint(getAttackPoint() + resurrectionBuffAddAtt);
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddAtt + " 공격력을 얻습니다! (현재 공격력 : " + getAttackPoint() + ")");
+        } else if(Math.random() <= resurrectionSkillPercentLess) {
+            setAttackPoint(getAttackPoint() + resurrectionBuffAddDef);
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddDef + " 방어력을 얻습니다! (현재 방어력 : " + getDefensePoint() + ")");
+        } else {
+            int resultHp = getHp() + resurrectionBuffHealHp;
+            setHp(Math.min(resultHp, getMaxHp()));
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 HP를 추가로 " + resurrectionBuffHealHp + " 회복합니다! (현재 HP : " + getHp() + ")");
+        }
     }
 }

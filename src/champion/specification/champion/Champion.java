@@ -4,8 +4,7 @@ import champion.specification.resurrection.Resurrection;
 import champion.util.BattleUtil;
 import champion.util.GameConstants;
 
-import static champion.util.GameConstants.criticalDamageMultiple;
-import static champion.util.GameConstants.initCriticalPercent;
+import static champion.util.GameConstants.*;
 
 public abstract class Champion {
     // 접근 제어자를 통한 외부 직접 속성 접근 차단
@@ -123,7 +122,6 @@ public abstract class Champion {
         return hp <= 0;
     }
 
-    // 템플릿 메서드 패턴으로 확장
     // Q 스킬
     public abstract boolean useQ(Champion target);
 
@@ -133,7 +131,6 @@ public abstract class Champion {
         return useQ(target);
     }
 
-    // 템플릿 메서드 패턴으로 확장
     // 챔피언 특성 별 고유 스킬
     public abstract void specialSkill();
 
@@ -144,10 +141,16 @@ public abstract class Champion {
     }
 
     // 부활 했는지 체크하여 1번만 부활
-    public void actResurrect() {
+    // 템플릿 메서드 확장
+    public final void actResurrect() {
         if(hp <= 0 && !isResurrected) {
             isResurrected = true;
             resurrection.resurrect();
+
+            actAddBuffResurrect();
         }
     }
+
+    // 챔피언 별 부활시 버프 제공
+    protected void actAddBuffResurrect() {}
 }

@@ -56,4 +56,19 @@ public class Veigar extends Champion implements Mage {
         BattleUtil.Log.print(getName() + " 의 더블 스킬! 1번당 " + (int) (doubleSkillPercent * 100)
                              + "% 확률로 스킬을 두번 사용합니다! 남은 더블 스킬 : " + doubleSkillStack);
     }
+
+    @Override
+    protected void actAddBuffResurrect() {
+        if(Math.random() <= resurrectionSkillPercentMajor) {
+            int resultHp = getHp() + resurrectionBuffHealHp;
+            setHp(Math.min(resultHp, getMaxHp()));
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 HP를 추가로 " + resurrectionBuffHealHp + " 회복합니다! (현재 HP : " + getHp() + ")");
+        } else if(Math.random() <= resurrectionSkillPercentMajor) {
+            setAttackPoint(getAttackPoint() + resurrectionBuffAddDef);
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddDef + " 방어력을 얻습니다! (현재 방어력 : " + getDefensePoint() + ")");
+        } else {
+            setAttackPoint(getAttackPoint() + resurrectionBuffAddAtt);
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddAtt + " 공격력을 얻습니다! (현재 공격력 : " + getAttackPoint() + ")");
+        }
+    }
 }

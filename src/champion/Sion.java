@@ -59,4 +59,19 @@ public class Sion extends Champion implements Tank, Warrior {
         BattleUtil.Log.print(getName() + " 의 돌진! 공격을 "
                              + sionDashAddAtt + " 증가 시킵니다! 현재 공격력 : " + getAttackPoint());
     }
+
+    @Override
+    protected void actAddBuffResurrect() {
+        if(Math.random() <= resurrectionSkillPercentLess) {
+            setAttackPoint(getAttackPoint() + resurrectionBuffAddAtt);
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddAtt + " 공격력을 얻습니다! (현재 공격력 : " + getAttackPoint() + ")");
+        } else if(Math.random() <= resurrectionSkillPercentMajor) {
+            setAttackPoint(getAttackPoint() + resurrectionBuffAddDef);
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 " + resurrectionBuffAddDef + " 방어력을 얻습니다! (현재 방어력 : " + getDefensePoint() + ")");
+        } else {
+            int resultHp = getHp() + resurrectionBuffSionHealHp;
+            setHp(Math.min(resultHp, getMaxHp()));
+            BattleUtil.Log.print(getName() + " 이(가) 부활 버프로 HP를 추가로 " + resurrectionBuffSionHealHp + " 회복합니다! (현재 HP : " + getHp() + ")");
+        }
+    }
 }
