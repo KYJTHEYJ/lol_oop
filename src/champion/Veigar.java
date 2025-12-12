@@ -2,6 +2,7 @@ package champion;
 
 import champion.specification.champion.Champion;
 import champion.specification.champion.Mage;
+import champion.specification.resurrection.CommonResurrection;
 
 import static champion.util.GameConstants.*;
 
@@ -13,6 +14,7 @@ public class Veigar extends Champion implements Mage {
 
     public Veigar(String name, int hp, int attackPoint, int defensePoint) {
         super(name, hp, attackPoint, defensePoint);
+        setResurrection(new CommonResurrection(this));
     }
 
     @Override
@@ -50,7 +52,7 @@ public class Veigar extends Champion implements Mage {
     @Override
     public void doubleSkill() {
         doubleSkillStack++;
-        System.out.println(getName() + " 의 더블 스킬! 1번당 "+ (doubleSkillPercent * 100)
+        System.out.println(getName() + " 의 더블 스킬! 1번당 "+ (int) (doubleSkillPercent * 100)
                            +"% 확률로 스킬을 두번 사용합니다! 남은 더블 스킬 : " + doubleSkillStack);
     }
 }

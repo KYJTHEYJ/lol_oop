@@ -9,6 +9,7 @@ public final class GameConstants {
     public static final double QSkillActPercent = 0.2;
     public static final double basicAttackActPercent = 0.5;
     public static final double specialSkillActPercent = 0.3;
+    public static final double commonResurrectHpPercent = 0.5;
     // endregion
 
     // region 공통 확률 관련
@@ -50,6 +51,8 @@ public final class GameConstants {
     public static final double sionQSkillDamageMultiple2 = 2;
     public static final double sionQSkillDamageMultiple3 = 2.5;
     public static final double sionSpecialSkillRandomPercent = 0.5;
+    public static final int sionGloriousDeathResurrectHP = 200;
+    public static final int sionGloriousDeathAddAttPoint = 100;
     public static final int sionDashAddAtt = 5;
     public static final int sionDefenceUpDef = 8;
     public static final int veigarQSkillDamge = 150;

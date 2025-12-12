@@ -1,5 +1,6 @@
 package champion.specification.champion;
 
+import champion.specification.resurrection.Resurrection;
 import champion.util.GameConstants;
 
 import static champion.util.GameConstants.criticalDamageMultiple;
@@ -12,7 +13,8 @@ public abstract class Champion {
     private int hp;
     private int attackPoint;
     private int defensePoint;
-    private
+    private Resurrection resurrection;
+    private boolean isResurrected = false;
 
     //region Getter and Setter
     public String getName() {
@@ -51,6 +53,17 @@ public abstract class Champion {
         this.defensePoint = defensePoint;
     }
 
+    public Resurrection getResurrection() {
+        return resurrection;
+    }
+
+    // 부활 전략 패턴 사용
+    // 일반 챔피언들은 CommonResurrection 을 set 사용
+    // 특정 챔피언은 특정 Resurrection 을 set 사용
+    public void setResurrection(Resurrection resurrection) {
+        this.resurrection = resurrection;
+    }
+
     @Override
     public String toString() {
         return "Champion{" +
@@ -59,6 +72,7 @@ public abstract class Champion {
                ", hp=" + hp +
                ", attackPoint=" + attackPoint +
                ", defensePoint=" + defensePoint +
+               ", resurrection=" + resurrection +
                '}';
     }
     //endregion
@@ -84,7 +98,7 @@ public abstract class Champion {
         GameConstants.battleCount++;
         System.out.println(getName() + " -> " + target.getName() + "을 공격!");
         if (Math.random() <= initCriticalPercent) {
-            System.out.println("치명타 공격! 2배 대미지!");
+            System.out.println("치명타 공격! 2배 공격력으로 주는 대미지!");
             return target.takeDamage(attackPoint * criticalDamageMultiple);
         } else {
             return target.takeDamage(attackPoint);
@@ -102,6 +116,8 @@ public abstract class Champion {
 
         System.out.println(name + " 이(가) " + actualDamage + " 대미지를 입었습니다!");
         System.out.println(name + " 의 현재 체력 : " + hp);
+
+        actResurrect();
 
         return hp <= 0;
     }
@@ -126,10 +142,11 @@ public abstract class Champion {
         specialSkill();
     }
 
-    // 부활
-    public final void resurrect() {
-        GameConstants.battleCount++;
-        System.out.println(name + " 이(가) 부활하여 다시 전투 합니다!");
-        setHp((int) Math.round(maxHp * 0.3));
+    // 부활 했는지 체크하여 1번만 부활
+    public void actResurrect() {
+        if(hp <= 0 && !isResurrected) {
+            isResurrected = true;
+            resurrection.resurrect();
+        }
     }
 }

@@ -3,6 +3,8 @@ package champion;
 import champion.specification.champion.Champion;
 import champion.specification.champion.Tank;
 import champion.specification.champion.Warrior;
+import champion.specification.resurrection.CommonResurrection;
+import champion.specification.resurrection.SionGloriousDeath;
 
 import static champion.util.GameConstants.*;
 
@@ -10,6 +12,7 @@ public class Sion extends Champion implements Tank, Warrior {
 
     public Sion(String name, int hp, int attackPoint, int defensePoint) {
         super(name, hp, attackPoint, defensePoint);
+        setResurrection(new SionGloriousDeath(this));
     }
 
     @Override

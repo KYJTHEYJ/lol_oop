@@ -2,6 +2,8 @@ package champion;
 
 import champion.specification.champion.Champion;
 import champion.specification.champion.Ranged;
+import champion.specification.resurrection.CommonResurrection;
+import champion.specification.resurrection.Resurrection;
 
 import static champion.util.GameConstants.*;
 
@@ -11,6 +13,7 @@ public class Ashe extends Champion implements Ranged {
 
     public Ashe(String name, int hp, int attackPoint, int defensePoint) {
         super(name, hp, attackPoint, defensePoint);
+        setResurrection(new CommonResurrection(this));
     }
 
     @Override

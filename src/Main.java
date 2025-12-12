@@ -3,6 +3,7 @@ import champion.Sion;
 import champion.Veigar;
 import champion.specification.champion.Champion;
 import champion.Garen;
+import champion.specification.resurrection.CommonResurrection;
 import champion.util.BattleUtil;
 import champion.util.GameConstants;
 

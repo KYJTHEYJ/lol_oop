@@ -2,6 +2,8 @@ package champion;
 
 import champion.specification.champion.Champion;
 import champion.specification.champion.Warrior;
+import champion.specification.resurrection.CommonResurrection;
+import champion.specification.resurrection.Resurrection;
 
 import static champion.util.GameConstants.garenDashAddAtt;
 import static champion.util.GameConstants.garenQSkillDamage;
@@ -10,6 +12,7 @@ public class Garen extends Champion implements Warrior {
 
     public Garen(String name, int hp, int attackPoint, int defensePoint) {
         super(name, hp, attackPoint, defensePoint);
+        setResurrection(new CommonResurrection(this));
     }
 
     @Override
