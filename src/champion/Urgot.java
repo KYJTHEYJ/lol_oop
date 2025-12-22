@@ -6,7 +6,7 @@ public class Urgot extends Champion {
 
     protected Urgot(ChampionType championType, String name, int maxHp, int hp, int attackDamage, int defense) {
         super(ChampionType.WARRIOR
-                , URGOT_US_NAME
+                , URGOT_NAME
                 , URGOT_INIT_HP
                 , URGOT_INIT_HP
                 , URGOT_INIT_ATK

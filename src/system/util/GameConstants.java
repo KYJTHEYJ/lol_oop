@@ -28,5 +28,4 @@ public class GameConstants {
     public final static int URGOT_INIT_SKILL_E_HEAL_COEFFICIENT = 3;
     public final static double URGOT_INIT_SKILL_R_COEFFICIENT = 0.5;
     public final static double URGOT_INIT_SKILL_R_EXECUTE = 0.2;
-
 }
