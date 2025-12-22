@@ -7,26 +7,33 @@ import static system.benefit.LevelUpBenefit.*;
 import static system.util.GameConstants.*;
 
 public abstract class Champion {
+    private final ChampionType championType;
     private final String name;
-    int level;
-    int maxHp;
-    int hp;
-    int maxMp;
-    int mp;
-    int attackDamage;
-    int defense;
+    private int level;
+    private final int maxHp;
+    private int hp;
+    private final int maxMp;
+    private int mp;
+    private int attackDamage;
+    private int defense;
     private int levelUpCount = LELVEL_UP_REQUIRED;
+    public static int createdCount = 0;
 
     //region 생성자, getter, setter
-    protected Champion(String name, int maxHp, int hp, int maxMp, int mp, int attackDamage, int defense) {
+    protected Champion(ChampionType championType, String name, int maxHp, int hp, int attackDamage, int defense) {
+        this.championType = championType;
         this.name = name;
         this.level = MIN_LEVEL;
         this.maxHp = maxHp;
         this.hp = hp;
-        this.maxMp = maxMp;
-        this.mp = mp;
+        this.maxMp = MP_MAX_VALUE;
+        this.mp = MP_INIT_VALUE;
         this.attackDamage = attackDamage;
         this.defense = defense;
+    }
+
+    public ChampionType getChampionType() {
+        return championType;
     }
 
     public String getName() {
@@ -144,7 +151,7 @@ public abstract class Champion {
 
     public void basicAttack(Champion target) {
         try {
-            checkDeath(target);
+            checkAllDeath(target);
             System.out.printf("< %s > 이 < %s > 에게 기본 공격!\n", this.name, target.getName());
             takeDamage(target, this.attackDamage);
             levelUp();
@@ -157,14 +164,29 @@ public abstract class Champion {
         int takeDamage = damage - target.defense;
 
         try {
-            checkDeath(target);
-            this.hp = this.hp - takeDamage;
-            System.out.printf("< %s > 이 %d 의 대미지를 입습니다!\n", this.name, takeDamage);
+            checkAllDeath(target);
+            target.hp = target.hp - takeDamage;
+            System.out.printf("< %s > 이 %d 의 대미지를 입습니다!\n", target.name, takeDamage);
             checkHp(target);
         } catch (DeathException e) {
             System.out.println(e.getMessage());
         } catch (MinusHpException e) {
             target.hp = e.getZeroHp();
+        } finally {
+            System.out.printf("< %s > 의 HP : %d\n", target.name, target.hp);
+        }
+    }
+
+    public void heal(Champion target, int heal) {
+        try {
+            checkAllDeath(target);
+
+            this.hp = Math.min(this.hp + heal, target.maxHp);
+
+            System.out.printf("< %s > 이 %d 만큼 HP를 회복합니다!\n", target.name, heal);
+            System.out.printf("< %s > 의 HP : %d\n", target.name, target.hp);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -185,28 +207,31 @@ public abstract class Champion {
         }
     }
 
-    public abstract void skillQ();
-    public abstract void skillW();
-    public abstract void skillE();
-    public abstract void skillR();
+    public abstract void skillQ(Champion target);
 
-    public void useQ() {
+    public abstract void skillW(Champion target);
+
+    public abstract void skillE(Champion target);
+
+    public abstract void skillR(Champion target);
+
+    public void useQ(Champion target) {
         levelUp();
-        skillQ();
+        skillQ(target);
     }
 
-    public void useW() {
+    public void useW(Champion target) {
         levelUp();
-        skillW();
+        skillW(target);
     }
 
-    public void useE() {
+    public void useE(Champion target) {
         levelUp();
-        skillE();
+        skillE(target);
     }
 
-    public void useR() {
+    public void useR(Champion target) {
         levelUp();
-        skillR();
+        skillR(target);
     }
 }
