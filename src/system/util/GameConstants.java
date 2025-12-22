@@ -4,12 +4,20 @@ public class GameConstants {
 
     private GameConstants() {}
 
-    public final static int LELVEL_UP_REQUIRED = 4;
     public final static int MIN_LEVEL = 1;
-    public final static int MAX_LEVEL = 5;
+    public final static int MAX_LEVEL = 3;
     public final static int MP_MAX_VALUE = 5;
     public final static int MP_INIT_VALUE = 3;
 
+    public final static int LVUP_MP_HEAL = 3;
+    public final static int LVUP_ATK_PLUS = 10;
+    public final static int LVUP_DEF_PLUS = 5;
+    public final static int WARRIOR_ATK_PLUS = 20;
+    public final static int TANK_DEF_PLUS = 10;
+    public final static int MAGE_SKILL_DAMAGE_PLUS = 50;
+    public final static int SUP_HEAL_PLUS = 100;
+
+    public final static String URGOT_NAME = "Urgot";
     public final static int URGOT_INIT_HP = 655;
     public final static int URGOT_INIT_ATK = 63;
     public final static int URGOT_INIT_DEF = 36;

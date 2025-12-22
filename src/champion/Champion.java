@@ -16,7 +16,6 @@ public abstract class Champion {
     private int mp;
     private int attackDamage;
     private int defense;
-    private int levelUpCount = LELVEL_UP_REQUIRED;
     public static int createdCount = 0;
 
     //region 생성자, getter, setter
@@ -154,7 +153,6 @@ public abstract class Champion {
             checkAllDeath(target);
             System.out.printf("< %s > 이 < %s > 에게 기본 공격!\n", this.name, target.getName());
             takeDamage(target, this.attackDamage);
-            levelUp();
         } catch (DeathException e) {
             System.out.println(e.getMessage());
         }
@@ -192,15 +190,9 @@ public abstract class Champion {
 
     public void levelUp() {
         try {
-            checkDeath(this);
-
-            if (this.levelUpCount == 0) {
-                if (this.getLevel() < MAX_LEVEL) {
-                    getBenefit().getBenefit(this);
-                    levelUpCount = LELVEL_UP_REQUIRED;
-                } else {
-                    this.levelUpCount--;
-                }
+            if (this.getLevel() < MAX_LEVEL) {
+                checkDeath(this);
+                getBenefit().getBenefit(this);
             }
         } catch (DeathException e) {
             System.out.println(e.getMessage());
@@ -214,24 +206,4 @@ public abstract class Champion {
     public abstract void skillE(Champion target);
 
     public abstract void skillR(Champion target);
-
-    public void useQ(Champion target) {
-        levelUp();
-        skillQ(target);
-    }
-
-    public void useW(Champion target) {
-        levelUp();
-        skillW(target);
-    }
-
-    public void useE(Champion target) {
-        levelUp();
-        skillE(target);
-    }
-
-    public void useR(Champion target) {
-        levelUp();
-        skillR(target);
-    }
 }
