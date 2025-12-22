@@ -5,24 +5,19 @@ import static system.util.GameConstants.*;
 public class Urgot extends Champion {
 
     protected Urgot(ChampionType championType, String name, int maxHp, int hp, int attackDamage, int defense) {
-        super(ChampionType.WARRIOR
-                , URGOT_NAME
-                , URGOT_INIT_HP
-                , URGOT_INIT_HP
-                , URGOT_INIT_ATK
-                , URGOT_INIT_DEF);
+        super(championType, name, maxHp, hp, attackDamage, defense);
         createdCount++;
-
     }
 
     @Override
     public void skillQ(Champion target) {
         System.out.println("부식성 폭약!");
-        System.out.printf("< %s > 의 대미지를 %d 를 입히고 방어력을 3 감소 시킵니다!\n"
+        System.out.printf("< %s > 의 대미지를 %d 를 입히고 방어력을 %d 감소 시킵니다!\n"
                 , target.getName()
-                , 40 + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_Q_COEFFICIENT));
+                , 40 + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_Q_COEFFICIENT)
+                , URGOT_INIT_SKILL_Q_DEFENCE_MINUS);
         takeDamage(target, 40 + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_Q_COEFFICIENT));
-        target.setDefense(target.getDefense() - 3);
+        target.setDefense(target.getDefense() - URGOT_INIT_SKILL_Q_DEFENCE_MINUS);
 
     }
 
