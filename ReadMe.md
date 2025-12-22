@@ -1,9 +1,3 @@
-롤 챔피언 기반 객체지향 구현해보기
+롤 챔피언 기반 객체지향 구현해보기 2.0.0
 -
-- 클래스 생성과 객체 생성, OOP 관련
-- 각 챔피언 공통 추상 클래스 champion/specification/champion/Champion
-- 챔피언의 특성에 따른 고유 스킬 인터페이스 champion/specification/Mage, Ranged, Tank, Warrior
-- 구현해본 챔피언들 Ashe, Garen, Sion, Veigar
-- Team 클래스를 통한 팀별 지정 가능
-- 실행은 Main, 확률별 스킬, 기본공격, 고유스킬 발동 등을 통해 한 쪽의 Hp가 0이 될 때까지 전투 종료되도록 구현 (Battle 클래스를 통한 1대1 팀별 지정 챔피언 중 랜덤 산출)
-- 부분 주석을 통한 제네릭 상하한 테스트 및 무분별한 제네릭 선언시 위험성 서술
+- 리워크
