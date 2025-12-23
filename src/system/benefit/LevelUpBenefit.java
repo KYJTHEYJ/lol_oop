@@ -1,9 +1,8 @@
 package system.benefit;
 
 import champion.Champion;
-import champion.ChampionType;
+import champion.type.ChampionType;
 
-import java.util.Objects;
 import java.util.Random;
 
 import static system.util.GameConstants.*;

@@ -4,10 +4,18 @@ public class GameConstants {
 
     private GameConstants() {}
 
+    public static final int basicAttackPercent = 20;
+    public static final int useQSkillPercent = 15;
+    public static final int useWSkillPercent = 15;
+    public static final int useESkillPercent = 15;
+    public static final int useRSkillPercent = 15;
+    public static final int levelUpPercent = 20;
+
     public final static int MIN_LEVEL = 1;
     public final static int MAX_LEVEL = 3;
     public final static int MP_MAX_VALUE = 5;
-    public final static int MP_INIT_VALUE = 3;
+    public final static int COMMON_MP_INIT_VALUE = 3;
+    public final static int MAGE_SUPPORT_MP_INIT_VALUE = MP_MAX_VALUE;
 
     public final static int LVUP_MP_HEAL = 3;
     public final static int LVUP_ATK_PLUS = 10;

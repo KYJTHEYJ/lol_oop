@@ -1,4 +1,4 @@
-package champion;
+package champion.type;
 
 import static system.util.GameConstants.*;
 

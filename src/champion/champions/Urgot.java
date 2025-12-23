@@ -53,7 +53,7 @@ public class Urgot extends Champion {
     @Override
     public void skillR(Champion target) {
         System.out.println("불사의 공포!");
-        System.out.printf("< %s > 에게 대미지를 %d 를 입히고 입힌 후 상대의 체력이 %d 이하라면 상대를 처치합니다\n"
+        System.out.printf("< %s > 에게 대미지를 %d 를 입히고 입힌 후 상대의 체력이 %d%% 이하라면 상대를 처치합니다\n"
                 , target.getName()
                 , URGOT_INIT_SKILL_R_DAMAGE + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_R_COEFFICIENT)
                 , (int) (URGOT_INIT_SKILL_R_EXECUTE * 100));

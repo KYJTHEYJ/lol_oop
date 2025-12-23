@@ -1,7 +1,9 @@
 package champion;
 
+import champion.type.ChampionType;
 import system.exceptions.DeathException;
 import system.exceptions.MinusHpException;
+import system.exceptions.MinusMpException;
 
 import static system.benefit.LevelUpBenefit.*;
 import static system.util.GameConstants.*;
@@ -26,7 +28,19 @@ public abstract class Champion {
         this.maxHp = maxHp;
         this.hp = hp;
         this.maxMp = MP_MAX_VALUE;
-        this.mp = MP_INIT_VALUE;
+        this.mp = COMMON_MP_INIT_VALUE;
+        this.attackDamage = attackDamage;
+        this.defense = defense;
+    }
+
+    protected Champion(ChampionType championType, String name, int maxHp, int hp, int mp, int attackDamage, int defense) {
+        this.championType = championType;
+        this.name = name;
+        this.level = MIN_LEVEL;
+        this.maxHp = maxHp;
+        this.hp = hp;
+        this.maxMp = MP_MAX_VALUE;
+        this.mp = mp;
         this.attackDamage = attackDamage;
         this.defense = defense;
     }
@@ -136,16 +150,6 @@ public abstract class Champion {
             throw new MinusHpException("해당 < " + target.name + " > 챔피언의 mp가 - 수치로 설정 되고 있습니다");
         }
     }
-
-    private void checkTargetHpMp() {
-        checkHp();
-        checkMp();
-    }
-
-    private void checkTargetHpMp(Champion champion) {
-        checkHp(champion);
-        checkMp(champion);
-    }
     //region
 
     public void basicAttack(Champion target) {
@@ -196,30 +200,130 @@ public abstract class Champion {
             }
         } catch (DeathException e) {
             System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            this.mp = 0;
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
         }
     }
 
     public abstract void skillQ(Champion target);
 
-    public void skillQ() {
-        skillQ(this);
+    public void useQSkill() {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. 남은 MP: %d\n", this.name, this.mp);
+            skillQ(this);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            this.mp = 0;
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
+    }
+
+    public void useQSkill(Champion target) {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. 남은 MP: %d\n", this.name, this.mp);
+            skillQ(target);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
     }
 
     public abstract void skillW(Champion target);
 
-    public void skillW() {
-        skillW(this);
+    public void useWSkill() {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
+            skillW(this);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
+    }
+
+    public void useWSkill(Champion target) {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
+            skillE(target);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
     }
 
     public abstract void skillE(Champion target);
 
-    public void skillE() {
-        skillE(this);
+    public void useESkill() {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
+            skillE(this);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
+    }
+
+    public void useESkill(Champion target) {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
+            skillE(target);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
     }
 
     public abstract void skillR(Champion target);
 
-    public void skillR() {
-        skillR(this);
+    public void useRSkill() {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
+            skillR(this);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
+    }
+
+    public void useRSkill(Champion target) {
+        try {
+            checkDeath(this);
+            this.mp -= 1;
+            checkMp();
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
+            skillR(target);
+        } catch (DeathException e) {
+            System.out.println(e.getMessage());
+        } catch (MinusMpException e) {
+            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        }
     }
 }

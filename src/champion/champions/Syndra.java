@@ -7,8 +7,8 @@ import static system.util.GameConstants.*;
 
 public class Syndra extends Champion {
 
-    public Syndra(ChampionType championType, String name, int maxHp, int hp, int attackDamage, int defense) {
-        super(championType, name, maxHp, hp, attackDamage, defense);
+    public Syndra(ChampionType championType, String name, int maxHp, int hp, int mp, int attackDamage, int defense) {
+        super(championType, name, maxHp, hp, mp, attackDamage, defense);
         createdCount++;
     }
 
