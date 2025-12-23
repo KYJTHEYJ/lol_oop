@@ -6,7 +6,7 @@ import static system.util.GameConstants.*;
 // 전사 -> 레벨업 시 공격력 증가 옵션 발동시 추가 증가
 // 마법사 -> 스킬 데미지 증가 (* 레벨)
 // 탱커 -> 레벨업 시 방어력 증가 옵션 발동시 추가 증가
-// 서포터 -> 체력 회복 스킬 발동에 추가 증가
+// 서포터 -> 체력 회복 스킬 발동에 추가 증가 (* 레벨)
 public enum ChampionType {
     WARRIOR(WARRIOR_ATK_PLUS) {
         @Override
