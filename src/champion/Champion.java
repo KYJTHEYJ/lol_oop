@@ -201,9 +201,25 @@ public abstract class Champion {
 
     public abstract void skillQ(Champion target);
 
+    public void skillQ() {
+        skillQ(this);
+    }
+
     public abstract void skillW(Champion target);
+
+    public void skillW() {
+        skillW(this);
+    }
 
     public abstract void skillE(Champion target);
 
+    public void skillE() {
+        skillE(this);
+    }
+
     public abstract void skillR(Champion target);
+
+    public void skillR() {
+        skillR(this);
+    }
 }

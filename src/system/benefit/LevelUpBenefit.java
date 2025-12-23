@@ -17,6 +17,16 @@ public enum LevelUpBenefit {
 
             System.out.printf("< %s > 레벨 업! Lv.%d -> Lv.%d\n", target.getName(), target.getLevel(), target.getLevel() + 1);
             System.out.printf("< %s > 레벨 업하여 HP와 MP가 전부 회복됩니다!\n", target.getName());
+
+            if (target.getChampionType().equals(ChampionType.WARRIOR)) {
+                target.setAttackDamage(target.getAttackDamage() + ChampionType.WARRIOR.getMerit());
+                System.out.printf("< %s > 의 전사 특성으로 공격력이 %d 추가로 증가합니다! 현재 공격력 : %d\n", target.getName(), ChampionType.WARRIOR.getMerit(), target.getAttackDamage());
+            }
+
+            if (target.getChampionType().equals(ChampionType.TANK)) {
+                target.setAttackDamage(target.getAttackDamage() + ChampionType.TANK.getMerit());
+                System.out.printf("< %s > 의 탱커 특성으로 방어력이 %d 추가로 증가합니다! 현재 방어력 : %d\n", target.getName(), ChampionType.TANK.getMerit(), target.getDefense());
+            }
         }
     }
     , ATK_UP(40) {
