@@ -14,7 +14,7 @@ public class Syndra extends Champion {
 
     @Override
     public void skillQ(Champion target) {
-        System.out.println("어둠의 구체!");
+        System.out.println("<<<< 어둠의 구체 >>>>");
 
         int baseDamage = SYNDRA_INIT_SKILL_Q_DAMAGE + (int) Math.floor(this.getAttackDamage() * SYNDRA_INIT_SKILL_Q_COEFFICIENT);
         int mageBonus = this.getChampionType().calculateSkillBonus(this.getLevel());
@@ -26,7 +26,7 @@ public class Syndra extends Champion {
 
     @Override
     public void skillW(Champion target) {
-        System.out.println("의지의 힘!");
+        System.out.println("<<<< 의지의 힘 >>>>");
 
         int baseDamage = SYNDRA_INIT_SKILL_W_DAMAGE + (int) Math.floor(this.getAttackDamage() * SYNDRA_INIT_SKILL_W_COEFFICIENT);
         int mageBonus = this.getChampionType().calculateSkillBonus(this.getLevel());
@@ -42,7 +42,7 @@ public class Syndra extends Champion {
 
     @Override
     public void skillE(Champion target) {
-        System.out.println("적군 와해!");
+        System.out.println("<<<< 적군 와해 >>>>");
 
         int baseDamage = SYNDRA_INIT_SKILL_E_DAMAGE + (int) Math.floor(this.getAttackDamage() * SYNDRA_INIT_SKILL_E_COEFFICIENT);
         int mageBonus = this.getChampionType().calculateSkillBonus(this.getLevel());
@@ -58,7 +58,7 @@ public class Syndra extends Champion {
 
     @Override
     public void skillR(Champion target) {
-        System.out.println("풀려난 힘!");
+        System.out.println("<<<< 풀려난 힘 >>>>");
 
         int baseDamage = SYNDRA_INIT_SKILL_R_DAMAGE + (int) Math.floor(this.getAttackDamage() * SYNDRA_INIT_SKILL_R_COEFFICIENT);
         int mageBonus = this.getChampionType().calculateSkillBonus(this.getLevel());

@@ -23,7 +23,7 @@ public enum LevelUpBenefit {
             }
 
             if (target.getChampionType().equals(ChampionType.TANK)) {
-                target.setAttackDamage(target.getAttackDamage() + ChampionType.TANK.getMerit());
+                target.setDefense(target.getDefense() + ChampionType.TANK.getMerit());
                 System.out.printf("< %s > 의 탱커 특성으로 방어력이 %d 추가로 증가합니다! 현재 방어력 : %d\n", target.getName(), ChampionType.TANK.getMerit(), target.getDefense());
             }
         }
@@ -52,7 +52,7 @@ public enum LevelUpBenefit {
             System.out.printf("< %s > 레벨 업하여 방어력이 %d 증가 됩니다! MP가 %d 회복됩니다! 현재 방어력 : %d\n", target.getName(), LVUP_DEF_PLUS , LVUP_MP_HEAL, target.getDefense());
 
             if (target.getChampionType().equals(ChampionType.TANK)) {
-                target.setAttackDamage(target.getAttackDamage() + ChampionType.TANK.getMerit());
+                target.setDefense(target.getDefense() + ChampionType.TANK.getMerit());
                 System.out.printf("< %s > 의 탱커 특성으로 방어력이 %d 추가로 증가합니다! 현재 방어력 : %d\n", target.getName(), ChampionType.TANK.getMerit(), target.getDefense());
             }
         }

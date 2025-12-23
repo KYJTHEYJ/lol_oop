@@ -2,6 +2,7 @@ package champion;
 
 import champion.type.ChampionType;
 import system.exceptions.DeathException;
+import system.exceptions.MinusDamageException;
 import system.exceptions.MinusHpException;
 import system.exceptions.MinusMpException;
 
@@ -105,61 +106,47 @@ public abstract class Champion {
     //region 챔피언 사망 여부 체크
     private void checkDeath() {
         if (this.getHp() <= 0) {
-            throw new DeathException(this, "< " + this.name + " > 챔피언은 이미 사망하였습니다");
-        }
-    }
-
-    private void checkDeath(Champion champion) {
-        if (champion.getHp() <= 0) {
-            throw new DeathException(champion, "< " + champion.name + " > 챔피언은 이미 사망하였습니다");
+            throw new DeathException(this);
         }
     }
 
     private void checkAllDeath(Champion champion) {
         if (this.getHp() <= 0) {
-            throw new DeathException(this, "< " + this.name + " > 챔피언은 이미 사망하였습니다");
+            throw new DeathException(this);
         }
 
         if (champion.getHp() <= 0) {
-            throw new DeathException(champion, "< " + champion.name + " > 챔피언은 이미 사망하였습니다");
+            throw new DeathException(champion);
         }
     }
     //region
 
     //region 챔피언 Hp, Mp 마이너스 체크
-    private void checkHp() {
-        if (this.hp < 0) {
-            throw new MinusHpException("해당 < " + this.name + " > 챔피언의 hp가 - 수치로 설정 되고 있습니다");
-        }
-    }
-
     private void checkMp() {
         if (this.mp < 0) {
-            throw new MinusHpException("해당 < " + this.name + " > 챔피언의 mp가 - 수치로 설정 되고 있습니다");
+            throw new MinusMpException(this);
         }
     }
 
     private void checkHp(Champion target) {
         if (target.getHp() < 0) {
-            throw new MinusHpException("해당 < " + target.name + " > 챔피언의 hp가 - 수치로 설정 되고 있습니다");
-        }
-    }
-
-    private void checkMp(Champion target) {
-        if (target.getMp() < 0) {
-            throw new MinusHpException("해당 < " + target.name + " > 챔피언의 mp가 - 수치로 설정 되고 있습니다");
+            throw new MinusHpException(target);
         }
     }
     //region
 
-    public void basicAttack(Champion target) {
-        try {
-            checkAllDeath(target);
-            System.out.printf("< %s > 이 < %s > 에게 기본 공격!\n", this.name, target.getName());
-            takeDamage(target, this.attackDamage);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
+    //region
+    private void checkMinusDamage(Champion target, int damage) {
+        if (damage <= 0) {
+            throw new MinusDamageException(target, damage);
         }
+    }
+    //endregion
+
+    public void basicAttack(Champion target) {
+        checkAllDeath(target);
+        System.out.printf("< %s > 이(가) < %s > 에게 기본 공격!\n", this.name, target.getName());
+        takeDamage(target, this.attackDamage);
     }
 
     public void takeDamage(Champion target, int damage) {
@@ -167,163 +154,90 @@ public abstract class Champion {
 
         try {
             checkAllDeath(target);
+            checkMinusDamage(target, takeDamage);
             target.hp = target.hp - takeDamage;
-            System.out.printf("< %s > 이 %d 의 대미지를 입습니다!\n", target.name, takeDamage);
+            System.out.printf("< %s > 이(가) %d 의 대미지를 입습니다!\n", target.name, takeDamage);
             checkHp(target);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
-        } catch (MinusHpException e) {
-            target.hp = e.getZeroHp();
+        } catch (MinusDamageException e) {
+            target.hp = target.hp - e.getOneDamage();
+            System.out.printf("< %s > 이(가) %d 의 대미지를 입습니다!\n", target.name, e.getOneDamage());
+            checkHp(target);
         } finally {
             System.out.printf("< %s > 의 HP : %d\n", target.name, target.hp);
         }
     }
 
     public void heal(Champion target, int heal) {
-        try {
-            checkAllDeath(target);
-
-            this.hp = Math.min(this.hp + heal, target.maxHp);
-
-            System.out.printf("< %s > 이 %d 만큼 HP를 회복합니다!\n", target.name, heal);
-            System.out.printf("< %s > 의 HP : %d\n", target.name, target.hp);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
-        }
+        checkAllDeath(target);
+        this.hp = Math.min(this.hp + heal, target.maxHp);
+        System.out.printf("< %s > 이(가) %d 만큼 HP를 회복합니다!\n", target.name, heal);
+        System.out.printf("< %s > 의 HP : %d\n", target.name, target.hp);
     }
 
     public void levelUp() {
-        try {
-            if (this.getLevel() < MAX_LEVEL) {
-                checkDeath(this);
-                getBenefit().getBenefit(this);
-            }
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
-        } catch (MinusMpException e) {
-            this.mp = 0;
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+        if (this.getLevel() < MAX_LEVEL) {
+            checkDeath();
+            getBenefit().getBenefit(this);
+        } else {
+            System.out.printf("< %s > 가 레벨이 이미 최대이므로 HP와 MP를 전부 회복합니다!", this.name);
+            this.hp = this.getMaxHp();
+            this.mp = this.getMaxMp();
         }
     }
 
     public abstract void skillQ(Champion target);
 
-    public void useQSkill() {
-        try {
-            checkDeath(this);
-            this.mp -= 1;
-            checkMp();
-            System.out.printf("< %s > 의 MP를 1 소모합니다. 남은 MP: %d\n", this.name, this.mp);
-            skillQ(this);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
-        } catch (MinusMpException e) {
-            this.mp = 0;
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
-        }
-    }
-
     public void useQSkill(Champion target) {
         try {
-            checkDeath(this);
+            checkAllDeath(target);
             this.mp -= 1;
             checkMp();
-            System.out.printf("< %s > 의 MP를 1 소모합니다. 남은 MP: %d\n", this.name, this.mp);
             skillQ(target);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
+            System.out.printf("< %s > 의 MP를 1 소모합니다. 남은 MP: %d\n", this.name, this.mp);
         } catch (MinusMpException e) {
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+            basicAttack(target);
         }
     }
 
     public abstract void skillW(Champion target);
 
-    public void useWSkill() {
-        try {
-            checkDeath(this);
-            this.mp -= 1;
-            checkMp();
-            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
-            skillW(this);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
-        } catch (MinusMpException e) {
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
-        }
-    }
-
     public void useWSkill(Champion target) {
         try {
-            checkDeath(this);
+            checkAllDeath(target);
             this.mp -= 1;
             checkMp();
+            skillW(target);
             System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
-            skillE(target);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
         } catch (MinusMpException e) {
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+            basicAttack(target);
         }
     }
 
     public abstract void skillE(Champion target);
 
-    public void useESkill() {
-        try {
-            checkDeath(this);
-            this.mp -= 1;
-            checkMp();
-            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
-            skillE(this);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
-        } catch (MinusMpException e) {
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
-        }
-    }
-
     public void useESkill(Champion target) {
         try {
-            checkDeath(this);
+            checkAllDeath(target);
             this.mp -= 1;
             checkMp();
-            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
             skillE(target);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
         } catch (MinusMpException e) {
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+            basicAttack(target);
         }
     }
 
     public abstract void skillR(Champion target);
 
-    public void useRSkill() {
-        try {
-            checkDeath(this);
-            this.mp -= 1;
-            checkMp();
-            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
-            skillR(this);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
-        } catch (MinusMpException e) {
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
-        }
-    }
-
     public void useRSkill(Champion target) {
         try {
-            checkDeath(this);
+            checkAllDeath(target);
             this.mp -= 1;
             checkMp();
-            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
             skillR(target);
-        } catch (DeathException e) {
-            System.out.println(e.getMessage());
+            System.out.printf("< %s > 의 MP를 1 소모합니다. (남은 MP: %d)\n", this.name, this.mp);
         } catch (MinusMpException e) {
-            System.out.printf("< %s > 의 MP가 부족합니다! (현재 MP: %d)\n", this.name, this.mp);
+            basicAttack(target);
         }
     }
 }

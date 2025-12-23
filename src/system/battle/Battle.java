@@ -2,7 +2,10 @@ package system.battle;
 
 import champion.Champion;
 import champion.ChampionPool;
+import system.exceptions.DeathException;
+import system.exceptions.MinusHpException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -28,12 +31,7 @@ public class Battle {
 
             if (championName.equals("?")) {
                 pickChampion = championPool.getRandomChampion();
-                System.out.println("\n< " + pickChampion.getName() + " > 이 선택 되었습니다!");
-                System.out.println("챔피언 타입 : " + pickChampion.getChampionType());
-                System.out.println("HP : " + pickChampion.getMaxHp());
-                System.out.println("MP / 최대 MP : " + pickChampion.getMp() + " / " + pickChampion.getMaxMp());
-                System.out.println("방어력 : " + pickChampion.getDefense());
-                return championPool.getRandomChampion();
+                return pickChampionInfo(pickChampion);
             }
 
             if (!canPickChampionNameList.contains(championName) && championPool.getChampion(championName).isEmpty()) {
@@ -42,19 +40,25 @@ public class Battle {
             }
 
             pickChampion = championPool.getChampion(championName).get();
-            System.out.println("\n< " + pickChampion.getName() + " > 이 선택 되었습니다!");
-            System.out.println("챔피언 타입 : " + pickChampion.getChampionType());
-            System.out.println("HP : " + pickChampion.getMaxHp());
-            System.out.println("MP / 최대 MP : " + pickChampion.getMp() + " / " + pickChampion.getMaxMp());
-            System.out.println("방어력 : " + pickChampion.getDefense());
-            return pickChampion;
+            return pickChampionInfo(pickChampion);
         }
         while(true);
     }
 
+    private Champion pickChampionInfo(Champion pickChampion) {
+        System.out.println("\n< " + pickChampion.getName() + " > 이 선택 되었습니다!");
+        System.out.println("챔피언 타입 : " + pickChampion.getChampionType());
+        System.out.println("HP : " + pickChampion.getMaxHp());
+        System.out.println("MP / 최대 MP : " + pickChampion.getMp() + " / " + pickChampion.getMaxMp());
+        System.out.println("공격력 : " + pickChampion.getAttackDamage());
+        System.out.println("방어력 : " + pickChampion.getDefense());
+        return pickChampion;
+    }
+
     public void battleAct(Champion champion, Champion target) {
         int[] actPercentArray = {basicAttackPercent, useQSkillPercent, useWSkillPercent, useESkillPercent, useRSkillPercent, levelUpPercent};
-        int randomActPercent = new Random().nextInt(100);
+        int allPercent = Arrays.stream(actPercentArray).sum();
+        int randomActPercent = new Random().nextInt(allPercent);
         int actPercent = 0;
 
         for(int i = 0; true; i++) {
@@ -85,6 +89,14 @@ public class Battle {
         }
     }
 
+    private Champion winner(Champion champion1, Champion champion2) {
+        if(champion1.getHp() > champion2.getHp()) {
+            return champion1;
+        }
+
+        return champion2;
+    }
+
     public void oneVsOne() {
         Champion champion1 = pickChampion(null);
         Champion champion2 = pickChampion(champion1);
@@ -99,10 +111,16 @@ public class Battle {
 
         do {
             System.out.printf("\n[ %d 턴 ]\n", turn);
-            battleAct(champion1, champion2);
-            battleAct(champion2, champion1);
+            try {
+                battleAct(champion1, champion2);
+                battleAct(champion2, champion1);
+            } catch (DeathException | MinusHpException e) {
+                break;
+            }
             turn++;
         } while(champion1.getHp() > 0 && champion2.getHp() > 0);
 
+        System.out.println("====== 전투 결과 ======");
+        System.out.println("< " + winner(champion1, champion2).getName() + " > 승리!");
     }
 }

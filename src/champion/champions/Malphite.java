@@ -14,7 +14,7 @@ public class Malphite extends Champion {
 
     @Override
     public void skillQ(Champion target) {
-        System.out.println("지진의 파편!");
+        System.out.println("<<<< 지진의 파편! >>>>");
         System.out.printf("< %s > 에게 대미지를 %d 를 입힙니다!\n"
                 , target.getName()
                 , MALPHITE_INIT_SKILL_Q_DAMAGE + (int) Math.floor(this.getAttackDamage() * MALPHITE_INIT_SKILL_Q_COEFFICIENT));
@@ -23,7 +23,7 @@ public class Malphite extends Champion {
 
     @Override
     public void skillW(Champion target) {
-        System.out.println("천둥소리!");
+        System.out.println("<<<< 천둥소리! >>>>");
         System.out.printf("< %s > 에게 대미지를 %d 를 입힙니다!\n"
                 , target.getName()
                 , MALPHITE_INIT_SKILL_W_DAMAGE + (int) Math.floor(this.getAttackDamage() * MALPHITE_INIT_SKILL_W_COEFFICIENT));
@@ -32,7 +32,7 @@ public class Malphite extends Champion {
 
     @Override
     public void skillE(Champion target) {
-        System.out.println("지면강타!");
+        System.out.println("<<<< 지면강타! >>>>");
         System.out.printf("< %s > 에게 대미지를 %d 를 입히고 방어력을 %d 감소 시킵니다!\n"
                 , target.getName()
                 , MALPHITE_INIT_SKILL_E_DAMAGE + (int) Math.floor(this.getAttackDamage() * MALPHITE_INIT_SKILL_E_COEFFICIENT)
@@ -46,7 +46,7 @@ public class Malphite extends Champion {
 
     @Override
     public void skillR(Champion target) {
-        System.out.println("멈출 수 없는 힘!");
+        System.out.println("<<<< 멈출 수 없는 힘! >>>>");
         System.out.printf("< %s > 에게 대미지를 %d 를 입히고 방어력을 %d 감소 시킵니다!\n"
                 , target.getName()
                 , MALPHITE_INIT_SKILL_R_DAMAGE + (int) Math.floor(this.getAttackDamage() * MALPHITE_INIT_SKILL_R_COEFFICIENT)
