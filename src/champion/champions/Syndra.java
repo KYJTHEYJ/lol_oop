@@ -52,7 +52,9 @@ public class Syndra extends Champion {
                 , target.getName(), SYNDRA_INIT_SKILL_E_HITS, totalDamage);
 
         for (int index = 0; index < SYNDRA_INIT_SKILL_E_HITS; index++) {
-            takeDamage(target, totalDamage);
+            if (target.getHp() >= 0) {
+                takeDamage(target, totalDamage);
+            }
         }
     }
 
@@ -68,7 +70,9 @@ public class Syndra extends Champion {
                 , target.getName(), SYNDRA_INIT_SKILL_R_HITS, totalDamage);
 
         for (int index = 0; index < SYNDRA_INIT_SKILL_R_HITS; index++) {
-            takeDamage(target, totalDamage);
+            if (target.getHp() >= 0) {
+                takeDamage(target, totalDamage);
+            }
         }
     }
 }

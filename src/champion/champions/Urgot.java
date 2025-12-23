@@ -35,7 +35,9 @@ public class Urgot extends Champion {
                 , URGOT_INIT_SKILL_W_DAMAGE + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_W_COEFFICIENT));
 
         for (int index = 0; index < URGOT_INIT_SKILL_W_HITS; index++) {
-            takeDamage(target, URGOT_INIT_SKILL_W_DAMAGE + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_W_COEFFICIENT));
+            if (target.getHp() >= 0) {
+                takeDamage(target, URGOT_INIT_SKILL_W_DAMAGE + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_W_COEFFICIENT));
+            }
         }
     }
 
@@ -60,9 +62,11 @@ public class Urgot extends Champion {
 
         takeDamage(target, URGOT_INIT_SKILL_R_DAMAGE + (int) Math.floor(this.getAttackDamage() * URGOT_INIT_SKILL_R_COEFFICIENT));
 
-        if(target.getHp() <= (target.getMaxHp() * URGOT_INIT_SKILL_R_EXECUTE)) {
-            System.out.println("< 불사의 공포 효과가 발동합니다! 처치합니다! >");
-            takeDamage(target, target.getHp() + target.getDefense());
+        if(target.getHp() >= 0) {
+            if (target.getHp() <= (target.getMaxHp() * URGOT_INIT_SKILL_R_EXECUTE)) {
+                System.out.println("< 불사의 공포 효과가 발동합니다! 처치합니다! >");
+                takeDamage(target, target.getHp() + target.getDefense());
+            }
         }
     }
 }
